@@ -47,6 +47,31 @@ services:
       # This project's own codebase, read-only, for code-gen Tools. Clone it
       # to MORROWPLOTS_REPO_DIR by hand first (see .env), then uncomment:
       # - ${MORROWPLOTS_REPO_DIR}:/app/backend/data/project-code:ro
+      #
+      # Illinois branding for the UI. `branding/` sits next to this file. These
+      # are mounted over Open WebUI's build-time static files (/app/build/static)
+      # because it re-copies that folder over its served one on every start, so
+      # edits inside the container would not survive a restart.
+      #   icons         tab icon, logo, default model icon, loading screen
+      #   login-bg.jpg  photo behind the login page (see custom.css)
+      #   custom.css    login-page styling; loaded on every page
+      #   loader.js     small script loaded on every page: starts each login
+      #                 with the sidebar collapsed
+      - ./branding/favicon.png:/app/build/static/favicon.png:ro
+      - ./branding/favicon.svg:/app/build/static/favicon.svg:ro
+      - ./branding/favicon.ico:/app/build/static/favicon.ico:ro
+      - ./branding/favicon-96x96.png:/app/build/static/favicon-96x96.png:ro
+      - ./branding/apple-touch-icon.png:/app/build/static/apple-touch-icon.png:ro
+      - ./branding/web-app-manifest-192x192.png:/app/build/static/web-app-manifest-192x192.png:ro
+      - ./branding/web-app-manifest-512x512.png:/app/build/static/web-app-manifest-512x512.png:ro
+      - ./branding/splash.png:/app/build/static/splash.png:ro
+      - ./branding/splash-dark.png:/app/build/static/splash-dark.png:ro
+      - ./branding/login-bg.jpg:/app/build/static/login-bg.jpg:ro
+      - ./branding/custom.css:/app/build/static/custom.css:ro
+      - ./branding/loader.js:/app/build/static/loader.js:ro
+      # The UI falls back to /favicon.png (site root, not /static) when a model
+      # image fails to load, so cover that one too.
+      - ./branding/favicon.png:/app/build/favicon.png:ro
 
     networks:
       - edge
