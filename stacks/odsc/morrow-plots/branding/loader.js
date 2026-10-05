@@ -31,3 +31,24 @@
     subtree: true
   });
 })();
+
+(function () {
+  var SUFFIX = ' (Open WebUI)';
+  function strip(s) { return s.split(SUFFIX).join(''); }
+  function clean() {
+    // Browser tab title
+    if (document.title.indexOf(SUFFIX) !== -1) document.title = strip(document.title);
+    // Visible text on the login page only
+    var page = document.getElementById('auth-page');
+    if (!page) return;
+    var walker = document.createTreeWalker(page, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.indexOf(SUFFIX) !== -1) node.nodeValue = strip(node.nodeValue);
+    }
+  }
+  clean();
+  new MutationObserver(clean).observe(document.documentElement, {
+    childList: true, subtree: true, characterData: true
+  });
+})();

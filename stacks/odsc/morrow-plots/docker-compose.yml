@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
 
     environment:
-      - WEBUI_NAME=Morrow Plots Assistant
+      - WEBUI_NAME= The Morrow Plots Assistant
       - ENABLE_SIGNUP=false
       - VECTOR_DB=pgvector
       # Host `owui-postgres` -- the OTHER stack's container name, reachable
