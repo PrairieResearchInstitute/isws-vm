@@ -1,0 +1,65 @@
+/*
+ * Morrow Plots Assistant -- login page styling.
+ * Loaded on every page by Open WebUI (/static/custom.css), so everything is
+ * scoped to #auth-page, which only exists on the login screen.
+ */
+
+/* --- Background: the Morrow Plots aerial photo ------------------------------ */
+#auth-page > div:first-child {
+  background-color: #13294b;
+  background-image: url('/static/login-bg.jpg');
+  background-size: cover;
+  /* Biased toward the bottom of the photo so the plots stay in view. */
+  background-position: 50% 72%;
+  background-repeat: no-repeat;
+}
+
+/* Dark theme: same photo, dimmed so the card stays the focus. */
+html.dark #auth-page > div:first-child {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('/static/login-bg.jpg');
+}
+
+/* --- Login card: frosted panel over the photo ------------------------------- */
+#auth-login-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 1rem;
+  /* Beats the page's own bottom padding (pb-10) so the card is evenly padded. */
+  padding: 2rem 2rem 2.25rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+html.dark #auth-login-card {
+  background: rgba(23, 23, 23, 0.88);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Logo: Illinois "I" above the sign-in title ------------------------------ */
+/* Open WebUI places a tiny logo in the top-left corner; hide it and show a
+   larger one inside the card instead (transparent splash art, theme-aware). */
+#auth-page .fixed.m-10 {
+  display: none;
+}
+
+#auth-login-card::before {
+  content: '';
+  display: block;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 1.25rem;
+  background: url('/static/splash.png') center / contain no-repeat;
+}
+
+html.dark #auth-login-card::before {
+  background-image: url('/static/splash-dark.png');
+}
+
+/* --- Small screens: let the card use the width --------------------------------- */
+@media (max-width: 640px) {
+  #auth-login-card {
+    padding: 1.5rem 1.25rem 1.75rem;
+  }
+}
